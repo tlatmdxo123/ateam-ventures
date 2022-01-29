@@ -8,6 +8,7 @@ const theme = {
         primary:{
             700:"#1565C0",
             500:"#2196F3",
+            300:"#BBDEFB",
 
         },
         gray:{
