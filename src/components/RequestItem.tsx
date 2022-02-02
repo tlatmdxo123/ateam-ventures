@@ -1,21 +1,18 @@
 import React from 'react';
-import { useRequest } from '../hooks/useFetch';
-import Loading from './Loading';
 import styled from 'styled-components';
-import { Request } from '../types/Request';
 import RequestItemHeader from './RequestItemHeader';
 import RequestItemBody from './RequestItemBody';
+import { useSelector } from 'react-redux';
+import { selectRequest } from '../redux/requests/selectors';
 
 interface Props{
     id:number,
 }
 
 function RequestItem({id}:Props) {
-    const {data:request,isLoading,error} = useRequest<Request>(id);
+    const request = useSelector(selectRequest(id));
 
-    if(request === undefined) return <></>;
-    if(isLoading) return <Loading/>
-    if(error) throw new Error(error);
+    if(!request) return <></>
 
     const {title,client,due,count,material,method,status,amount} = request;
 

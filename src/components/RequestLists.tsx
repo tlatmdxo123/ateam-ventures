@@ -5,21 +5,17 @@ import { selectFilter} from '../redux/filter/selectors';
 import { Request } from '../types/Request';
 import { pipe } from '../utils/fp';
 import EmptyLists from './EmptyLists';
-import Loading from './Loading';
 import { filterBy,filterByConsult } from '../utils/filter';
 import RequestItem from './RequestItem';
-import { useRequest } from '../hooks/useFetch';
+import { selectRequests } from '../redux/requests/selectors';
 
 function RequestLists() {
     const {materials,methods,consult} = useSelector(selectFilter);
-    
-    const {data:requests,isLoading,error} = useRequest();
+    const requests = useSelector(selectRequests);
 
     const filteredLists = pipe<Request[]>(filterBy(methods,'method'),filterBy(materials,'material'),filterByConsult(consult))(requests as Request[]);
 
-    if(!filteredLists || filteredLists.length === 0) return <EmptyLists/>
-    if(isLoading) return <Loading/>
-    if(error) return <div>{error}</div>
+    if(filteredLists?.length === 0) return <EmptyLists/>
 
     return (
         <Container>
