@@ -5,13 +5,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addMaterialFilter, addMethodFilter, removeMaterialFilter, removeMethodFilter, resetFilter } from '../redux/filter/actions';
 import { selectFilter } from '../redux/filter/selectors';
 import {MdRestartAlt} from 'react-icons/md';
-import { useMobile } from '../hooks/useViewportSize';
+import { useMobileStatus } from '../hooks/useViewportSize';
 
 function TypeFilters() {
     const dispatch = useDispatch();
     const {materials:materialFilters,methods:methodFilters} = useSelector(selectFilter)
 
-    const isMobile = useMobile();
+    const isMobile = useMobileStatus();
 
     const resetActive = materialFilters.length + methodFilters.length > 0
 

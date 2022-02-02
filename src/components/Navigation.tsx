@@ -1,6 +1,6 @@
 import React, {  useState } from 'react';
 import styled from 'styled-components';
-import { useMobile } from '../hooks/useViewportSize';
+import { useMobileStatus } from '../hooks/useViewportSize';
 import { MdMenu } from "react-icons/md";
 import Drawer from './Drawer';
 import NavigationLinks from './NavigationLinks';
@@ -8,7 +8,7 @@ import Logo from './Logo';
 
 function Navigation() {
     const [drawerActive,setDrawerActive] = useState(false);
-    const isMobile = useMobile();
+    const isMobile = useMobileStatus();
 
     return (
         <Container>

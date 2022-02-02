@@ -22,7 +22,7 @@ export function useViewportSize(){
     return viewPort
 }
 
-export function useMobile():boolean{
+export function useMobileStatus():boolean{
     const viewPortSize = useViewportSize();
     const themeContext = useContext(ThemeContext);
 

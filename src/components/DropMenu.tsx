@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 import {MdArrowDropDown} from 'react-icons/md';
 import CheckLists from './CheckLists';
