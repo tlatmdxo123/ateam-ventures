@@ -1,7 +1,7 @@
 import React from "react";
 import {  useSelector } from "react-redux";
 import styled from "styled-components";
-import { selectConsultStatus } from "../redux/filter/selectors";
+import { selectFilter } from "../redux/filter/selectors";
 
 interface Props{
     width: number,
@@ -14,7 +14,7 @@ interface Props{
 }
 
 function Toggle({ width, height,ballSize, activeBackgroundColor,activeBallColor,onToggle,id }:Props) {
-  const isActive = useSelector(selectConsultStatus)
+  const {consult:isActive} = useSelector(selectFilter)
 
   return (
     <>

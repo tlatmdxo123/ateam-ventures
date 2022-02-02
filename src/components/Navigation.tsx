@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import React, {  useState } from 'react';
+import styled from 'styled-components';
 import { useMobile } from '../hooks/useViewportSize';
 import { MdMenu } from "react-icons/md";
 import Drawer from './Drawer';

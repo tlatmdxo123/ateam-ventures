@@ -3,14 +3,13 @@ import styled from 'styled-components';
 import DropMenu from './DropMenu';
 import { useDispatch, useSelector } from 'react-redux';
 import { addMaterialFilter, addMethodFilter, removeMaterialFilter, removeMethodFilter, resetFilter } from '../redux/filter/actions';
-import { selectMaterials, selectMethods } from '../redux/filter/selectors';
+import { selectFilter } from '../redux/filter/selectors';
 import {MdRestartAlt} from 'react-icons/md';
 import { useMobile } from '../hooks/useViewportSize';
 
 function TypeFilters() {
     const dispatch = useDispatch();
-    const materialFilters = useSelector(selectMaterials);
-    const methodFilters = useSelector(selectMethods);
+    const {materials:materialFilters,methods:methodFilters} = useSelector(selectFilter)
 
     const isMobile = useMobile();
 

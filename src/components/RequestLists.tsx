@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { selectConsultStatus, selectMaterials, selectMethods } from '../redux/filter/selectors';
+import { selectFilter} from '../redux/filter/selectors';
 import { Request } from '../types/Request';
 import { pipe } from '../utils/fp';
 import EmptyLists from './EmptyLists';
@@ -11,9 +11,7 @@ import RequestItem from './RequestItem';
 import { useRequest } from '../hooks/useFetch';
 
 function RequestLists() {
-    const materials = useSelector(selectMaterials);
-    const methods = useSelector(selectMethods);
-    const consult = useSelector(selectConsultStatus);
+    const {materials,methods,consult} = useSelector(selectFilter);
     
     const {data:requests,isLoading,error} = useRequest();
 
