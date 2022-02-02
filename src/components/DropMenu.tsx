@@ -1,7 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import styled, { ThemeContext } from 'styled-components';
 import {MdArrowDropDown} from 'react-icons/md';
 import CheckLists from './CheckLists';
+import { PrimaryButton } from './Buttons';
 
 
 interface Props{
@@ -15,8 +16,12 @@ interface Props{
 
 function DropMenu({label,lists,selected,addFilter,removeFilter,marginRight=0}:Props) {
     const [isOpen,setOpen] = useState(false);
+    const themeContext = useContext(ThemeContext);
+    const buttonRef = useRef<HTMLButtonElement>(null);
    
     const selectedCount = selected.length;
+
+    const isActive = isOpen || selectedCount>0
 
     function onCheckHandler(e:React.ChangeEvent | React.KeyboardEvent){
         const target= e.target as HTMLInputElement
@@ -27,33 +32,33 @@ function DropMenu({label,lists,selected,addFilter,removeFilter,marginRight=0}:Pr
     }
 
     return (
-       <Label isActive={isOpen || selectedCount>0} id={label} marginRight={marginRight}>
-            <Button type='button' onClick={() => setOpen(open => !open)} aria-expanded={isOpen} aria-controls={`listbox-${label}`}>
-                {label}{selectedCount > 0 && `(${selectedCount})`}<MdArrowDropDown style={{marginLeft:'12px',fontSize:'20px'}}/>
-            </Button>
-            {isOpen && (
-                <CheckLists label={label} lists={lists} selected={selected} onCheckHandler={onCheckHandler} closeMenu={() => setOpen(false)}/>
-            )}
-        </Label>
+       <Container>
+        <PrimaryButton 
+                id={label}
+                type='button' 
+                background={isActive ? themeContext.colors.primary[700] : '#ffffff'}
+                color={isActive ? '#ffffff': themeContext.colors.gray[900]}
+                border={!isActive && themeContext.colors.gray[600]}
+                size='m'
+                onClick={() => setOpen(open => !open)} 
+                aria-expanded={isOpen} 
+                aria-controls={`listbox-${label}`}
+                ref={buttonRef}
+                style={{paddingRight:'13.5px',marginRight:'8px'}}
+            >
+            {label}{selectedCount > 0 && `(${selectedCount})`}<MdArrowDropDown style={{marginLeft:'12px',fontSize:'20px'}}/>
+        </PrimaryButton>
+        {isOpen && (
+            <CheckLists label={label} lists={lists} selected={selected} onCheckHandler={onCheckHandler} closeMenu={() => setOpen(false)}/>
+        )}
+       </Container>
     );
 }
 
-const Label = styled.label<{isActive:boolean,marginRight?:number}>`
-    display: block;
+const Container = styled.div`
     position: relative;
-    padding:9px 19px 9px 12px;
-    margin-right:${({marginRight}) => marginRight+'px'} ;
-    border-radius: 4px;
-    border:1px solid ${({theme}) => theme.colors.gray[600]};
-    background-color: ${({theme,isActive}) => isActive ? theme.colors.primary[700] : '#ffffff'};
-    button{
-        color:${({theme,isActive}) => isActive ? '#ffffff' : theme.colors.gray[900]};
-    };
 `
-const Button = styled.button`
-    font-size: ${({theme}) => theme.fontSizes['s']};
-    display:flex;
-    align-items: center;
-`
+
+
 
 export default DropMenu;

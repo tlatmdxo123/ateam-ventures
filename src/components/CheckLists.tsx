@@ -55,6 +55,8 @@ const CheckBox = styled.input`
     border-radius: 2px;
     margin-right: 10px;
 `
-const OptionLabel = styled.label``
+const OptionLabel = styled.label`
+    color:${({theme}) => theme.colors.gray[900]};
+`
 
 export default CheckLists;
