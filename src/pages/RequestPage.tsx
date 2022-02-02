@@ -3,6 +3,7 @@ import Header from '../components/Header';
 import Navigation from '../components/Navigation';
 import styled from 'styled-components';
 import RequestLists from '../components/RequestLists';
+import RequestsFilterBar from '../components/RequestsFilterBar';
 
 function RequestPage() {
     return (
@@ -10,6 +11,7 @@ function RequestPage() {
             <Navigation/>
             <PageCotainer>
                 <Header/>
+                <RequestsFilterBar/>
                 <RequestLists/>
             </PageCotainer>
         </Container>

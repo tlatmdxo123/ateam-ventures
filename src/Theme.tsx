@@ -24,6 +24,9 @@ const theme = {
         m:'14px',
         l:'16px',
         xl:'20px',
+    },
+    viewPort:{
+        mobile:480,
     }
 }
 

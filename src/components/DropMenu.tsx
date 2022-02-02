@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import {MdArrowDropDown} from 'react-icons/md';
+import CheckLists from './CheckLists';
 
 
 interface Props{
@@ -14,27 +15,24 @@ interface Props{
 
 function DropMenu({label,lists,selected,addFilter,removeFilter,marginRight=0}:Props) {
     const [isOpen,setOpen] = useState(false);
+   
     const selectedCount = selected.length;
 
-    function onCheckHandler(e:React.ChangeEvent){
+    function onCheckHandler(e:React.ChangeEvent | React.KeyboardEvent){
         const target= e.target as HTMLInputElement
+        if((e as React.KeyboardEvent).key === 'Enter'){
+            target.checked = !target.checked;
+        }
         target.checked === true ? addFilter(target.value) : removeFilter(target.value);
     }
 
     return (
        <Label isActive={isOpen || selectedCount>0} id={label} marginRight={marginRight}>
-            <Button type='button' onClick={() => setOpen(open => !open)}>
+            <Button type='button' onClick={() => setOpen(open => !open)} aria-expanded={isOpen} aria-controls={`listbox-${label}`}>
                 {label}{selectedCount > 0 && `(${selectedCount})`}<MdArrowDropDown style={{marginLeft:'12px',fontSize:'20px'}}/>
             </Button>
             {isOpen && (
-                <CheckLists role='listbox' aria-labelledby={label}>
-                    {lists.map(list => (  
-                        <Option key={list}>
-                            <CheckBox type='checkbox' id={list} value={list} checked={selected.includes(list)} onChange={(e) => onCheckHandler(e)}/>
-                            <OptionLabel htmlFor={list}>{list}</OptionLabel>
-                        </Option>
-                    ))}
-                </CheckLists>
+                <CheckLists label={label} lists={lists} selected={selected} onCheckHandler={onCheckHandler} closeMenu={() => setOpen(false)}/>
             )}
         </Label>
     );
@@ -57,26 +55,5 @@ const Button = styled.button`
     display:flex;
     align-items: center;
 `
-const CheckLists = styled.ul`
-    width:max-content;
-    position: absolute;
-    left: 0;
-    top: calc(100% + 4px);
-    padding: 12px 38px 16px 12px;
-    background-color: #ffffff;
-    border-radius: 4px;
-    border:1px solid ${({theme}) => theme.colors.gray[600]};
-`
-const Option = styled.li`
-    display: flex;
-    align-items: center;
-`
-const CheckBox = styled.input`
-    width: 18px;
-    height: 18px;
-    border-radius: 2px;
-    margin-right: 10px;
-`
-const OptionLabel = styled.label``
 
 export default DropMenu;
